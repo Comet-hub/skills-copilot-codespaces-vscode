@@ -1,17 +1,27 @@
-const http = require('http');
+// Import modules
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const authenticate = require('../authenticate');
+const cors = require('./cors');
 
-// Create a server object
-const server = http.createServer((req, res) => {
-    // Set the response header
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
+// Initialize express
+const app = express();
 
-    // Send the response
-    res.end('Hello, world!');
-});
+// Use middleware
+app.use(bodyParser.json());
+app.use(cors());
+
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/myapp', {useNewUrlParser: true, useUnifiedTopology: true});
+
+// Define routes
+// TODO: Define your routes here
 
 // Start the server
-server.listen(3000, () => {
-    console.log('Server is running on port 3000');
+const port = 3000;
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
 
 
